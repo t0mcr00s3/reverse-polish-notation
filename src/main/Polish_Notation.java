@@ -7,10 +7,6 @@ public class Polish_Notation {
 
     public void convertToReverse(){
         String temp;
-        System.out.println("");
-        for(String s: stack){
-            System.out.print(s + " ");
-        }
         for(int i = 1; i < stack.length - 1; i = i + 2){
             temp = stack[i];
             stack[i] = stack[i + 1];
