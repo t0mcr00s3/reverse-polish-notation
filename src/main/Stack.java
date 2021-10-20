@@ -1,8 +1,10 @@
-package main;
-
 public class Stack {
-    private String[] stack = new String[0];
+    private String[] stack;
     
+    public Stack(){
+        stack = new String[0];
+    }
+
     public void push(String value){
         if(value.equals("")){
             return;
@@ -30,7 +32,7 @@ public class Stack {
 
     public String get(int i){
         if(stack.length == 0){
-            return " ";
+            return "";
         }
         return stack[i];
     }

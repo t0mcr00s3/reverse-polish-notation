@@ -1,10 +1,6 @@
-package main;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 
 
 public class View {
@@ -15,124 +11,151 @@ public class View {
         final int WIDTH = 70;
         final int HEIGHT = 50; 
 
-
-        this.controller = new Controller(this);
+        controller = new Controller(this);
         JFrame frame = new JFrame("Калькулятор");
 
-        JButton clear_last_entry = new JButton("CE");
-        clear_last_entry.setBounds(10, 60, WIDTH, HEIGHT); 
-        clear_last_entry.addActionListener(this.controller);
-        frame.add(clear_last_entry);
+        JButton buttonCE = new JButton("CE");
+        buttonCE.setBounds(10, 60, WIDTH, HEIGHT); 
+        buttonCE.addActionListener(controller);
+        buttonCE.setActionCommand("Clear_Last_Entry");
+        frame.add(buttonCE);
 
-        JButton change_sign = new JButton("±");
-        change_sign.setBounds(80, 60, WIDTH, HEIGHT); 
-        change_sign.addActionListener(this.controller);
-        frame.add(change_sign);
+        JButton buttonChange_Sign= new JButton("±");
+        buttonChange_Sign.setBounds(80, 60, WIDTH, HEIGHT); 
+        buttonChange_Sign.addActionListener(controller);
+        buttonChange_Sign.setActionCommand("Change_Sign");
+        frame.add(buttonChange_Sign);
 
-        JButton clear = new JButton("C");
-        clear.setBounds(10, 110, WIDTH, HEIGHT);
-        clear.addActionListener(this.controller);
-        frame.add(clear);
+        JButton buttonPow= new JButton("x²");
+        buttonPow.setBounds(220, 60, WIDTH, HEIGHT); 
+        buttonPow.addActionListener(controller);
+        buttonPow.setActionCommand("Pow");
+        frame.add(buttonPow);
 
-        JButton percent = new JButton("%");
-        percent.setBounds(80, 110, WIDTH, HEIGHT);
-        percent.addActionListener(this.controller);
-        frame.add(percent);
+        JButton buttonC = new JButton("C");
+        buttonC.setBounds(10, 110, WIDTH, HEIGHT);
+        buttonC.addActionListener(controller);
+        buttonC.setActionCommand("Clear_All");
+        frame.add(buttonC);
 
-        JButton square_root = new JButton("√");
-        square_root.setBounds(150, 110, WIDTH, HEIGHT);
-        square_root.addActionListener(this.controller);
-        frame.add(square_root);
+        JButton buttonPercent = new JButton("%");
+        buttonPercent.setBounds(150, 60, WIDTH, HEIGHT);
+        buttonPercent.addActionListener(controller);
+        buttonPercent.setActionCommand("Percent");
+        frame.add(buttonPercent);
 
-        JButton div = new JButton("/");
-        div.setBounds(220, 110, WIDTH, HEIGHT);
-        div.addActionListener(this.controller);
-        frame.add(div);
+        JButton buttonSquare_Root = new JButton("sqrt"); //√
+        buttonSquare_Root.setBounds(150, 110, WIDTH, HEIGHT);
+        buttonSquare_Root.addActionListener(controller);
+        buttonSquare_Root.setActionCommand("Square_Root");
+        frame.add(buttonSquare_Root);
 
-        JButton sub = new JButton("-");
-        sub.setBounds(220, 210, WIDTH, HEIGHT);
-        sub.addActionListener(this.controller);
-        frame.add(sub);
+        JButton buttonDiv = new JButton("/");
+        buttonDiv.setBounds(220, 110, WIDTH, HEIGHT);
+        buttonDiv.addActionListener(controller);
+        buttonDiv.setActionCommand("Div");
+        frame.add(buttonDiv);
 
-        JButton mul = new JButton("*");
-        mul.setBounds(220, 160, WIDTH, HEIGHT);
-        mul.addActionListener(this.controller);
-        frame.add(mul);
+        JButton buttonSub = new JButton("-");
+        buttonSub.setBounds(220, 210, WIDTH, HEIGHT);
+        buttonSub.addActionListener(controller);
+        buttonSub.setActionCommand("Sub");
+        frame.add(buttonSub);
 
-        JButton add = new JButton("+");
-        add.setBounds(220, 260, WIDTH, 100);
-        add.addActionListener(this.controller);
-        frame.add(add);
+        JButton buttonMul = new JButton("*");
+        buttonMul.setBounds(220, 160, WIDTH, HEIGHT);
+        buttonMul.addActionListener(controller);
+        buttonMul.setActionCommand("Mul");
+        frame.add(buttonMul);
 
-        JButton decimal_point = new JButton(".");
-        decimal_point.setBounds(80, 310, WIDTH, HEIGHT);
-        decimal_point.addActionListener(this.controller);
-        frame.add(decimal_point);
+        JButton buttonAdd = new JButton("+");
+        buttonAdd.setBounds(220, 260, WIDTH, 100);
+        buttonAdd.addActionListener(controller);
+        buttonAdd.setActionCommand("Add");
+        frame.add(buttonAdd);
 
-        JButton equals = new JButton("=");
-        equals.setBounds(150, 310, WIDTH, HEIGHT);
-        equals.addActionListener(this.controller);
-        frame.add(equals);
+        JButton buttonDecimal_Point = new JButton(".");
+        buttonDecimal_Point.setBounds(80, 310, WIDTH, HEIGHT);
+        buttonDecimal_Point.addActionListener(controller);
+        buttonDecimal_Point.setActionCommand("Decimal_Point");
+        frame.add(buttonDecimal_Point);
 
-        JButton one = new JButton("1");
-        one.setBounds(10, 260, WIDTH, HEIGHT);
-        one.addActionListener(this.controller);
-        frame.add(one);
+        JButton buttonEquals = new JButton("=");
+        buttonEquals.setBounds(150, 310, WIDTH, HEIGHT);
+        buttonEquals.addActionListener(controller);
+        buttonEquals.setActionCommand("Result");
+        frame.add(buttonEquals);
 
-        JButton two = new JButton("2");
-        two.setBounds(80, 260, WIDTH, HEIGHT);
-        two.addActionListener(this.controller);
-        frame.add(two);
+        JButton buttonOne = new JButton("1");
+        buttonOne.setBounds(10, 260, WIDTH, HEIGHT);
+        buttonOne.addActionListener(controller);
+        buttonOne.setActionCommand("One");
+        frame.add(buttonOne);
 
-        JButton three = new JButton("3");
-        three.setBounds(150, 260, WIDTH, HEIGHT);
-        three.addActionListener(this.controller);
-        frame.add(three);
+        JButton buttonTwo = new JButton("2");
+        buttonTwo.setBounds(80, 260, WIDTH, HEIGHT);
+        buttonTwo.addActionListener(controller);
+        buttonTwo.setActionCommand("Two");
+        frame.add(buttonTwo);
 
-        JButton fourth = new JButton("4");
-        fourth.setBounds(10, 210, WIDTH, HEIGHT);
-        fourth.addActionListener(this.controller);
-        frame.add(fourth);
+        JButton buttonThree = new JButton("3");
+        buttonThree.setBounds(150, 260, WIDTH, HEIGHT);
+        buttonThree.addActionListener(controller);
+        buttonThree.setActionCommand("Three");
+        frame.add(buttonThree);
 
-        JButton five = new JButton("5");
-        five.setBounds(80, 210, WIDTH, HEIGHT);
-        five.addActionListener(this.controller);
-        frame.add(five);
+        JButton buttonFourth = new JButton("4");
+        buttonFourth.setBounds(10, 210, WIDTH, HEIGHT);
+        buttonFourth.addActionListener(this.controller);
+        buttonFourth.setActionCommand("Four");
+        frame.add(buttonFourth);
 
-        JButton six = new JButton("6");
-        six.setBounds(150, 210, WIDTH, HEIGHT);
-        six.addActionListener(this.controller);
-        frame.add(six);
+        JButton buttonFive = new JButton("5");
+        buttonFive.setBounds(80, 210, WIDTH, HEIGHT);
+        buttonFive.addActionListener(controller);
+        buttonFive.setActionCommand("Five");
+        frame.add(buttonFive);
 
-        JButton seven = new JButton("7");
-        seven.setBounds(10, 160, WIDTH, HEIGHT);
-        seven.addActionListener(this.controller);
-        frame.add(seven);
+        JButton buttonSix = new JButton("6");
+        buttonSix.setBounds(150, 210, WIDTH, HEIGHT);
+        buttonSix.addActionListener(controller);
+        buttonSix.setActionCommand("Six");
+        frame.add(buttonSix);
 
-        JButton eight = new JButton("8");
-        eight.setBounds(80, 160, WIDTH, HEIGHT);
-        eight.addActionListener(this.controller);
-        frame.add(eight);
+        JButton buttonSeven = new JButton("7");
+        buttonSeven.setBounds(10, 160, WIDTH, HEIGHT);
+        buttonSeven.addActionListener(controller);
+        buttonSeven.setActionCommand("Seven");
+        frame.add(buttonSeven);
 
-        JButton nine = new JButton("9");
-        nine.setBounds(150, 160, WIDTH, HEIGHT);
-        nine.addActionListener(this.controller);
-        frame.add(nine);
+        JButton buttonEight = new JButton("8");
+        buttonEight.setBounds(80, 160, WIDTH, HEIGHT);
+        buttonEight.addActionListener(controller);
+        buttonEight.setActionCommand("Eight");
+        frame.add(buttonEight);
 
-        JButton zero = new JButton("0");
-        zero.setBounds(10, 310, WIDTH, HEIGHT);
-        zero.addActionListener(this.controller);
-        frame.add(zero);
+        JButton buttonNine = new JButton("9");
+        buttonNine.setBounds(150, 160, WIDTH, HEIGHT);
+        buttonNine.addActionListener(controller);
+        buttonNine.setActionCommand("Nine");
+        frame.add(buttonNine);
 
-        JButton enter = new JButton("enter");
-        enter.setBounds(150, 60, WIDTH * 2, HEIGHT);
-        enter.addActionListener(this.controller);
-        frame.add(enter);
+        JButton buttonZero = new JButton("0");
+        buttonZero.setBounds(10, 310, WIDTH, HEIGHT);
+        buttonZero.addActionListener(controller);
+        buttonZero.setActionCommand("Zero");
+        frame.add(buttonZero);
+
+        JButton buttonBackspace = new JButton("←");
+        buttonBackspace.setBounds(80, 110, WIDTH, HEIGHT);
+        buttonBackspace.addActionListener(controller);
+        buttonBackspace.setActionCommand("backSpace");
+        frame.add(buttonBackspace);
 
         textField = new JTextField("");
         textField.setBounds(10, 10, 280, HEIGHT);
         textField.setEditable(false);
-        textField.setHorizontalAlignment(SwingConstants.RIGHT);
+        textField.setHorizontalAlignment(JTextField.RIGHT);
         frame.add(textField);
         
         frame.setSize(300, 390);
@@ -143,14 +166,14 @@ public class View {
     }
 
     public String getText(){
-        return this.textField.getText();
+        return textField.getText();
     }
 
     public void concatTextField(String str){
-        this.textField.setText(this.textField.getText().concat(str));
+        textField.setText(textField.getText().concat(str));
     }
 
     public void setTextField(String str){
-        this.textField.setText(str);
+        textField.setText(str);
     }
 }

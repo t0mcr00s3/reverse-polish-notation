@@ -1,4 +1,3 @@
-package main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,34 +6,34 @@ public class Controller implements ActionListener{
     private Model model;
     
     public Controller(View view){
-        this.model = new Model(view);
+        model = new Model(view);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand().toString()){
-            case "enter": this.model.Enter_Pressed(); break;
-            case "0": this.model.Number_Pressed("0");break;
-            case "1": this.model.Number_Pressed("1");break;
-            case "2": this.model.Number_Pressed("2");break;
-            case "3": this.model.Number_Pressed("3");break;
-            case "4": this.model.Number_Pressed("4");break;
-            case "5": this.model.Number_Pressed("5");break;
-            case "6": this.model.Number_Pressed("6");break;
-            case "7": this.model.Number_Pressed("7");break;
-            case "8": this.model.Number_Pressed("8");break;
-            case "9": this.model.Number_Pressed("9");break;
-            case "C": this.model.Clear_All();break;
-            case "CE": this.model.Clear_Last_Entry(); break;
-            case "±" : this.model.print_stack(); break;
-            case "." : this.model.Add_Comma();break;
-            case "*" : this.model.Sign_Pressed("*");break;
-            case "-" : this.model.Sign_Pressed("-");break;
-            case "/" : this.model.Sign_Pressed("/");break;
-            case "+" : this.model.Sign_Pressed("+");break;
-            case "√" : this.model.Sign_Pressed("√");break;
-            case "%" : this.model.Sign_Pressed("%");break;
-            case "=" : this.model.Calculate();break;
+        switch (e.getActionCommand()){
+            case "Zero": model.numberPressed("0"); break;
+            case "One": model.numberPressed("1"); break;
+            case "Two": model.numberPressed("2"); break;
+            case "Three": model.numberPressed("3"); break;
+            case "Four": model.numberPressed("4"); break;
+            case "Five": model.numberPressed("5"); break;
+            case "Six": model.numberPressed("6"); break;
+            case "Seven": model.numberPressed("7"); break;
+            case "Eight": model.numberPressed("8"); break;
+            case "Nine": model.numberPressed("9"); break;
+            case "Clear_All": model.removeAll(); break;
+            case "Clear_Last_Entry": model.clearLastEntry(); break;
+            case "backSpace": model.removeLastSymbol(); break;
+            case "Change_Sign" : model.toggleNumberSignPressed(); break;
+            case "Decimal_Point" : model.decimalPointPressed(); break;
+            case "Mul" : model.signPressed("*"); break;
+            case "Sub" : model.signPressed("-"); break;
+            case "Div" : model.signPressed("/"); break;
+            case "Add" : model.signPressed("+"); break;
+            case "Square_Root" : model.singleOperation("√"); break;
+            case "Percent" : model.signPressed("%"); break;
+            case "Pow" : model.singleOperation("^"); break;
+            case "Result" : model.Equal(); break;
         }
     }
 }

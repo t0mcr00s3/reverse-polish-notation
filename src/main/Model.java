@@ -1,144 +1,195 @@
-package main;
-
-import java.util.Stack;
-
 public class Model {
     private View view;
-    private Stack<String> stack = new Stack<String>();
     private String temp_number = "";
-    private boolean comma_status = false;
-    private boolean enter_status = false;
+    private boolean decimal_point_status = false;
+    private Stack stack;
 
     public Model(View view){
         this.view = view;
+        stack = new Stack();
     }
 
-    public void Number_Pressed(String number){
-        this.temp_number += number;
-        this.view.concatTextField(number);
+    public void numberPressed(String number){
+        temp_number = temp_number + number;
+        view.setTextField(temp_number);
     }
 
-    private void Clear_Temp_Number(){
-        this.temp_number = "";
-    }
-
-    public void Enter_Pressed(){
-        if(this.enter_status)return;
-        this.enter_status = true;
-        Push_stack(this.temp_number);
-        Clear_Temp_Number();
-        this.view.concatTextField(" ");
-    }
-
-    private void Push_stack(String value){
-        if(value.equals("")){
+    public void signPressed(String sign){
+        if(view.getText().length() == 0){
             return;
         }
-        this.stack.push(value);
-        Clear_Temp_Number();
+        stack.push(temp_number);
+        if(checkSign()){
+            removeSign();
+        }
+        stack.push(sign);
+        view.concatTextField(" " + sign);
+        decimal_point_status = false;
+        temp_number = "";
     }
 
-    public void Sign_Pressed(String sign){
-        Push_stack(this.temp_number);
-        if(!Check_Stack_Value()){
-            return;
+    private boolean checkSign(){
+        String [] signs = {"*", "/", "-", "+", "%"};
+        String last_sign = stack.get(stack.length() - 1);
+        boolean flag = false;
+        for(String item : signs){
+            if(item.equals(last_sign)){
+                flag = true;
+                break;
+            }
         }
-        if(this.stack.size()<2){
-            return;
-        }
-        Push_stack(sign);
-        Clear_Temp_Number();
-        this.view.concatTextField(" " + sign + " ");
+        return flag;
     }
 
-    private boolean Check_Stack_Value(){
-        if(this.stack.size() == 0) return false;
-        String value = this.stack.pop();
-        this.stack.push(value);
-        if(value.equals("-") || value.equals("+") || value.equals("/") || value.equals("*") || value.equals("%") || value.equals("√") || value.equals("")){
-            return false;
-        }
-        return true;
+    private void removeSign(){
+        stack.pop();
+        int length = view.getText().length() - 2;
+        view.setTextField(view.getText().substring(0, length));
     }
-    public void Clear_All(){
-        System.out.println(stack.size());
-        while(!stack.empty()){
+
+    public void singleOperation(String sign){
+        if(temp_number.length() == 0){
+            return;
+        }
+        stack.push(temp_number);
+        stack.push(sign); 
+        Equal();
+    }
+
+    public void toggleNumberSignPressed(){
+        if(temp_number.length() == 0){
+            return;
+        }
+        String buffer;
+        if(temp_number.charAt(0) == '-'){
+            buffer = temp_number.substring(1, temp_number.length());
+        }else{
+            buffer = "-" + temp_number;
+        }
+        temp_number = buffer;
+        view.setTextField(temp_number);
+    }
+
+    public void decimalPointPressed(){
+        if(decimal_point_status){
+            if(temp_number.endsWith(".")){
+                removeDecimalPoint(); 
+            }
+            return;
+        }
+        decimal_point_status = true;
+        if(temp_number.length() == 0){
+            temp_number = "0";
+        }
+        temp_number = temp_number + ".";
+        view.setTextField(temp_number);
+    } 
+
+    private void removeDecimalPoint(){
+        if(temp_number.length() == 1){
+            temp_number = "";
+            view.setTextField(temp_number);
+            return;
+        }
+        else{
+            temp_number = temp_number.substring(0, temp_number.length() - 1);
+            view.setTextField(temp_number);
+            decimal_point_status = false;
+        }
+    }
+
+    public void removeAll(){
+        stack = new Stack();
+        view.setTextField("");
+        temp_number = "";
+        decimal_point_status = false;
+    }
+
+    public void clearLastEntry(){
+        decimal_point_status = false;
+        if(stack.length() == 0){
+            temp_number = "";
+            view.setTextField(temp_number);
+            return;
+        }
+        int times_of_pop = view.getText().split(" ").length + 1;
+        if(temp_number.length() > 0){
+            times_of_pop = 0;
+        }else{
+            times_of_pop = view.getText().split(" ").length;
+        }
+        for(int i = 0; i < times_of_pop; i++){
             stack.pop();
         }
-        this.view.setTextField("");
-        this.temp_number = "";
-        this.enter_status = false;
+        temp_number = "";
+        view.setTextField(temp_number);
     }
 
-    public void Clear_Last_Entry(){
-        if(this.temp_number.length() == 1){
-            this.temp_number = "";
+    public void removeLastSymbol(){
+        if(checkSign()){
+            removeSign();
+        }
+        else{
+            if(temp_number.length() == 0){
+                temp_number = stack.pop();
+            }
+            if(decimal_point_status){
+                if(temp_number.endsWith(".")){
+                    removeDecimalPoint(); 
+                    return;
+                }
+            }
+            temp_number = temp_number.substring(0, temp_number.length() - 1);
+            view.setTextField(temp_number);
+        }
+    }
+
+    public void Equal(){
+        stack.push(temp_number);
+        if(checkSign()){
             return;
         }
-        if(this.temp_number.length() == 0 && stack.size() >= 1){
-            this.temp_number = this.stack.pop();
+        if(stack.length() == 0){
+            return;
         }
-        this.temp_number = this.temp_number.substring(0, this.temp_number.length() - 1);
-        String expression = this.view.getText().substring(0, this.view.getText().length() - 1);
-        this.view.setTextField(expression);
-    }
-
-    public void Add_Comma(){
-        if(this.comma_status)return;
-        this.comma_status = true;
-        this.temp_number.concat(".");
-        this.view.concatTextField(".");
-    }
-
-    public void print_stack(){
-        System.out.println("-------------------------");
-        for(String s : this.stack){
-            System.out.println(s);
+        Polish_Notation notation = new Polish_Notation(stack.getStack());
+        notation.convertToReverse();
+        String result = notation.computation();
+        if(result.equals("error")){
+            removeAll();
+            view.setTextField("error");
         }
+        decimal_point_status = checkResultForPointStatus(result);
+        result = processingResult(result);
+        removeAll();
+        temp_number = result;
+        view.setTextField(result);
     }
 
-    public void Calculate(){
-        Push_stack(this.temp_number);
-        if(Check_Stack_Value())return;
-        double arg1 = Double.valueOf(stack.get(0));
-        double arg2 = Double.valueOf(stack.get(1));
-        for(int i = 2; i < stack.size(); i++){
-            String value = stack.get(i);
-            switch (value){
-                case "/": arg1 /= arg2; break;
-                case "*": arg1 *= arg2; break;
-                case "+": arg1 += arg2; break;
-                case "-": arg1 -=arg2; break;
-                case "√": arg1 = Math.sqrt(arg1);break;
-                case "%": arg1 *= arg2 / arg2; break;
-                default: arg2 = Double.valueOf(stack.get(i));
+    private boolean checkResultForPointStatus(String result){
+        boolean flag = false;
+        for(String symbol: result.split("")){
+            if(symbol.equals(".")){
+                flag = true;
+                break;
             }
         }
-        String answer = Check_Record(String.valueOf(arg1));
-        Clear_All();
-        Push_stack(answer);
-        Clear_Temp_Number();
-        this.view.setTextField(answer);
+        return flag;
     }
 
-    private String Check_Record(String number){
-        String[] array = number.split("");
+    private String processingResult(String result){
+        int index = result.length() - 1;
         int count_of_zeros = 0;
-        int count_of_values = 0;
-        int index = number.length() - 1;
-        while(!array[index].equals(".")){
-            if(array[index].equals("0")){
+        String[] array_of_result = result.split("");
+        while(!array_of_result[index].equals(".")){
+            if(array_of_result[index].equals("0")){
                 count_of_zeros++;
             }
-            count_of_values++;
             index--;
         }
-        String answer = "";
-        if(count_of_values == count_of_zeros){
-            answer = number.substring(0, index);
-        }else{
-            answer = number;
+        if(count_of_zeros == result.length() - 1 - index){
+            result = result.substring(0, index);
         }
-        return answer;
+        return result;
     }
 }
