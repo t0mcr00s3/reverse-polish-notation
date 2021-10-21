@@ -18,6 +18,10 @@ public class Model {
         if(view.getText().length() == 0){
             return;
         }
+        if(view.getText().equals("error")){
+            view.setTextField("");
+            return;
+        }
         stack.push(temp_number);
         if(checkSign()){
             removeSign();
