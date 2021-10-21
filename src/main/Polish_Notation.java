@@ -15,6 +15,9 @@ public class Polish_Notation {
     }
 
     public String computation(){
+        if(stack.length == 1){
+            return stack[0];
+        }
         double var1 = Double.valueOf(stack[0]);
         double var2 = Double.valueOf(stack[1]);
         boolean flag = false;
@@ -42,6 +45,11 @@ public class Polish_Notation {
     private boolean checkOperation(String sign, double var1, double var2){
         if(sign.equals("/") || sign.equals("*")){
             if(var1 == 0.0 || var2 == 0.0){
+                return true;
+            }
+        }
+        if(sign.equals("√")){
+            if(var1 < 0){
                 return true;
             }
         }
