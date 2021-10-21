@@ -128,6 +128,8 @@ public class Model {
     public void removeLastSymbol(){
         if(checkSign()){
             removeSign();
+            temp_number = stack.pop();
+            view.setTextField(temp_number);
         }
         else{
             if(temp_number.length() == 0){
@@ -146,10 +148,7 @@ public class Model {
 
     public void Equal(){
         stack.push(temp_number);
-        if(checkSign()){
-            return;
-        }
-        if(stack.length() == 0){
+        if(checkSign() || temp_number.length() == 0){ 
             return;
         }
         Polish_Notation notation = new Polish_Notation(stack.getStack());
@@ -158,10 +157,12 @@ public class Model {
         if(result.equals("error")){
             removeAll();
             view.setTextField("error");
+            result = "";
+            return;
         }
-        decimal_point_status = checkResultForPointStatus(result);
         result = processingResult(result);
         removeAll();
+        decimal_point_status = checkResultForPointStatus(result);
         temp_number = result;
         view.setTextField(result);
     }
@@ -178,14 +179,20 @@ public class Model {
     }
 
     private String processingResult(String result){
+        if(result.length() == 1){
+            return result;
+        }
         int index = result.length() - 1;
         int count_of_zeros = 0;
         String[] array_of_result = result.split("");
-        while(!array_of_result[index].equals(".")){
+        while(index != 0){
             if(array_of_result[index].equals("0")){
                 count_of_zeros++;
             }
             index--;
+            if(array_of_result[index].equals(".")){
+                break;
+            }
         }
         if(count_of_zeros == result.length() - 1 - index){
             result = result.substring(0, index);
