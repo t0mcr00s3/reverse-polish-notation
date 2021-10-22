@@ -5,7 +5,7 @@ import javax.swing.JTextField;
 
 public class View {
     private Controller controller;
-    JTextField textField;
+    private JTextField textField;
 
     public View(){
         final int WIDTH = 70;
